@@ -30,24 +30,30 @@ export default function App() {
   const [numbers, setNumbers] = useState(false);
   const [symbols, setSymbols] = useState(false);
 
-  const generatePasswordString = (passwordlength: number) => {
+  const generatePasswordString = (
+    passwordlength: number,
+    useLower: boolean,
+    useUpper: boolean,
+    useNumber: boolean,
+    useSymbol: boolean,
+  ) => {
     let charList = '';
 
-    const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
-    const numbers = '0123456789';
+    const upperCaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowerCaseChars = 'abcdefghijklmnopqrstuvwxyz';
+    const numericChars = '0123456789';
     const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
-    if (upperCase) {
-      charList += upperCase;
+    if (useUpper) {
+      charList += upperCaseChars;
     }
-    if (lowerCase) {
-      charList += lowerCase;
+    if (useLower) {
+      charList += lowerCaseChars;
     }
-    if (numbers) {
-      charList += numbers;
+    if (useNumber) {
+      charList += numericChars;
     }
-    if (specialChars) {
+    if (useSymbol) {
       charList += specialChars;
     }
 
@@ -86,8 +92,14 @@ export default function App() {
             validationSchema={PasswordSchema}
             onSubmit={values => {
               console.log(values);
-
-              generatePasswordString(Number(values.passwordlength));
+              generatePasswordString(
+                Number(values.passwordlength),
+                lowerCase,
+                upperCase,
+                numbers,
+                symbols,
+              );
+              // generatePasswordString(Number(values.passwordlength));
             }}>
             {({
               values,
@@ -112,7 +124,7 @@ export default function App() {
                     style={styles.inputStyle}
                     value={values.passwordlength}
                     onChangeText={handleChange('passwordlength')}
-                    placeholder="Ex. 8"
+                    placeholder="Ex. 4-16"
                     keyboardType="numeric"
                   />
                 </View>
