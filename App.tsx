@@ -126,35 +126,136 @@ export default function App() {
                     fillColor="#29ab87"
                   />
                 </View>
-                <View style={styles.inputWraper}></View>
-                <View style={styles.inputWraper}></View>
-                <View style={styles.inputWraper}></View>
+                <View style={styles.inputWraper}>
+                  <Text style={styles.inputHeading}>Include uppercase</Text>
+                  <BouncyCheckBox
+                    isChecked={upperCase}
+                    onPress={() => {
+                      setUpperCase(!upperCase);
+                    }}
+                    fillColor="#29ab87"
+                  />
+                </View>
+                <View style={styles.inputWraper}>
+                  <Text style={styles.inputHeading}>Include numbers</Text>
+                  <BouncyCheckBox
+                    isChecked={numbers}
+                    onPress={() => {
+                      setNumbers(!numbers);
+                    }}
+                    fillColor="#29ab87"
+                  />
+                </View>
+                <View style={styles.inputWraper}>
+                  <Text style={styles.inputHeading}>Include symbols</Text>
+                  <BouncyCheckBox
+                    isChecked={symbols}
+                    onPress={() => {
+                      setSymbols(!symbols);
+                    }}
+                    fillColor="#29ab87"
+                  />
+                </View>
 
                 <View style={styles.formActions}>
-                  <TouchableOpacity>
-                    <Text>Generate Password</Text>
+                  <TouchableOpacity
+                    style={styles.primaryBtn}
+                    disabled={!isValid}
+                    onPress={handleSubmit}>
+                    <Text style={styles.primaryBtnText}>Generate Password</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity>
-                    <Text>Reset</Text>
+                  <TouchableOpacity
+                    style={styles.primaryBtn}
+                    onPress={() => {
+                      handleReset();
+                      resetPassword();
+                    }}>
+                    <Text style={styles.primaryBtnText}>Reset</Text>
                   </TouchableOpacity>
                 </View>
               </>
             )}
           </Formik>
         </View>
+        {isPassGenerated ? (
+          <View style={styles.card}>
+            <Text selectable={true} style={styles.result}>
+              {password}
+            </Text>
+            <Text style={styles.description}>Long press to copy</Text>
+          </View>
+        ) : null}
       </SafeAreaView>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  appContainer: {},
-  formContainer: {},
-  title: {},
-  inputWraper: {},
-  formActions: {},
+  appContainer: {
+    marginVertical: 16,
+    marginHorizontal: 2,
+    flex: 1,
+    alignItems: 'center',
+  },
+  formContainer: {
+    marginVertical: 12,
+    width: 320,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 12,
+  },
+  inputWraper: {
+    marginVertical: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 8,
+  },
+  formActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginVertical: 16,
+  },
   inputColumn: {},
-  inputHeading: {},
-  error: {},
+  inputHeading: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  error: {
+    color: 'red',
+  },
   inputStyle: {},
+  primaryBtn: {
+    height: 60,
+    width: 100,
+    backgroundColor: '#a3a0a9',
+    borderRadius: 8,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  primaryBtnText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  card: {
+    marginVertical: 16,
+    marginHorizontal: 16,
+    backgroundColor: '#c8dceb',
+    height: 80,
+    width: 200,
+    borderRadius: 10,
+  },
+  result: {
+    textAlign: 'center',
+    padding: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  description: {
+    textAlign: 'center',
+  },
 });
